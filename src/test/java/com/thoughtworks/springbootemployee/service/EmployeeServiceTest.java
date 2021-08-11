@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
@@ -37,6 +39,21 @@ public class EmployeeServiceTest {
         // Then
         assertEquals(employees, actualEmployees);
         assertIterableEquals(employees, actualEmployees);
+
+    }
+
+    @Test
+    void should_return_specific_employee_when_get_employee_given_employee_id() {
+        // Given
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        Employee employee = new Employee(4, "ace", 21, "male", 500);
+        when(employeeRepository.findEmployeeById(4)).thenReturn(employee);
+
+        // When
+        Employee actualEmployee = employeeService.findEmployeeById(4);
+
+        // Then
+        assertEquals(employee, actualEmployee);
 
     }
 }

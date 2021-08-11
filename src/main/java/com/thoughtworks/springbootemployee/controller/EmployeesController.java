@@ -40,8 +40,7 @@ public class EmployeesController {
     }
 
     @PostMapping
-    public void addEmployee(@RequestBody Employee employee) {
-        employee.setId(employees.size() + 1);
-        employees.add(employee);
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeService.addEmployee(employee);
     }
 }

@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -39,5 +40,11 @@ public class EmployeeRepository {
                 .skip((long) (pageSize - 1) * pageIndex)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public Employee addEmployee(Employee employee) {
+        employee.setId(employees.size() + 1);
+        employees.add(employee);
+        return employee;
     }
 }

@@ -89,4 +89,18 @@ public class EmployeeServiceTest {
         assertIterableEquals(employees, actualEmployees);
 
     }
+
+    @Test
+    public void should_create_employee_when_add_given_one_employee() {
+        // Given
+        Employee employee = new Employee(1, "russel", 22, "male", 1000);
+        when(employeeRepository.addEmployee(employee)).thenReturn(employee);
+
+        // When
+        Employee actualEmployee = employeeService.addEmployee(employee);
+
+        // Then
+        assertEquals(employee, actualEmployee);
+    }
+
 }

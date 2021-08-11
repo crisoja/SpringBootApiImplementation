@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ import java.util.stream.Collectors;
 public class EmployeesController {
 
     private List<Employee> employees = new ArrayList<>();
+    private EmployeeService employeeService;
+
+    public EmployeesController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     public EmployeesController() {
         employees.add(new Employee(1, "russel", 22, "male", 1000));
@@ -21,7 +27,7 @@ public class EmployeesController {
 
     @GetMapping
     public List<Employee> getAllEmployees() {
-        return employees;
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{employeeId}")

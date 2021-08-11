@@ -2,9 +2,11 @@ package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
@@ -24,5 +26,11 @@ public class EmployeeRepository {
         return employees.stream().filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Employee> findEmployeeByGender(String gender){
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 }

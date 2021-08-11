@@ -45,7 +45,6 @@ public class EmployeeServiceTest {
     @Test
     void should_return_specific_employee_when_get_employee_given_employee_id() {
         // Given
-        EmployeeService employeeService = new EmployeeService(employeeRepository);
         Employee employee = new Employee(4, "ace", 21, "male", 500);
         when(employeeRepository.findEmployeeById(4)).thenReturn(employee);
 
@@ -54,6 +53,25 @@ public class EmployeeServiceTest {
 
         // Then
         assertEquals(employee, actualEmployee);
+
+    }
+
+    @Test
+    void should_return_employees_when_get_employee_by_gender_given_employee_gender() {
+        // Given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "russel", 22, "male", 1000));
+        employees.add(new Employee(2, "janley", 18, "male", 50000));
+        employees.add(new Employee(3, "barbie", 20, "female", 2000));
+        List<Employee> maleEmployees = new ArrayList<>();
+        when(employeeRepository.findEmployeeByGender("male")).thenReturn(maleEmployees);
+
+        // When
+        List<Employee> actualMaleEmployees = employeeService.findEmployeeByGender("male");
+
+        // Then
+        assertEquals(maleEmployees, actualMaleEmployees);
+        assertIterableEquals(maleEmployees, actualMaleEmployees);
 
     }
 }

@@ -32,7 +32,7 @@ public class EmployeeServiceTest {
         given(employeeRepository.getEmployees()).willReturn(employees);
 
         // When
-        List<Employee> actualEmployees = employeeService.getAllEmployees();
+        List<Employee> actualEmployees = employeeService.getEmployees();
 
         // Then
         assertEquals(employees, actualEmployees);

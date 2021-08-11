@@ -19,15 +19,9 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
 
-    public EmployeesController() {
-        employees.add(new Employee(1, "russel", 22, "male", 1000));
-        employees.add(new Employee(2, "janley", 18, "male", 50000));
-        employees.add(new Employee(3, "barbie", 20, "female", 2000));
-    }
-
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public List<Employee> getEmployees() {
+        return employeeService.getEmployees();
     }
 
     @GetMapping("/{employeeId}")

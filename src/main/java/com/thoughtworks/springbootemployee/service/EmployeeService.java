@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){
-        return retiringEmployeeRepository.findEmployeesByPagination(pageIndex, pageSize);
+        return employeeRepository.findAll(PageRequest.of(pageIndex, pageSize)).getContent();
     }
 
     public Employee addEmployee(Employee employee) {

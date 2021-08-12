@@ -100,4 +100,28 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[1].name").value("barbara"))
                 .andExpect(jsonPath("$[2].name").value("ismael"));
     }
+
+    @Test
+    void should_return_list_of_employees_with_male_gender_when_call_find_employee_by_gender() throws Exception {
+        //given
+        final Employee janley = new Employee(1, "janley", 15, "male", 5000);
+        final Employee barbara = new Employee(2, "barbara", 18, "female", 50000);
+        final Employee ismael = new Employee(3, "ismael", 18, "male", 30000);
+        final Employee jakilu = new Employee(4, "jakilu", 18, "female", 80000);
+        final Employee leonor = new Employee(5, "leonor", 18, "female", 70000);
+        employeeRepository.save(janley);
+        employeeRepository.save(barbara);
+        employeeRepository.save(ismael);
+        employeeRepository.save(jakilu);
+        employeeRepository.save(leonor);
+
+        //when and then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees?gender={gender}", "male"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("janley"))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[1].name").value("ismael"))
+                .andExpect(jsonPath("$[1].gender").value("male"));
+
+    }
 }

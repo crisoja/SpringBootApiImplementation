@@ -10,6 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,5 +77,30 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.salary").value(5000));
     }
 
+    @Test
+    void should_return_list_of_employees_when_get_by_pagination_given_page_size_page_index() throws Exception {
+        //given
+        final Employee janley = new Employee(1, "janley", 15, "male", 5000);
+        final Employee barbara = new Employee(2, "barbara", 18, "female", 50000);
+        final Employee ismael = new Employee(3, "ismael", 18, "male", 30000);
+        final Employee jakilu = new Employee(4, "jakilu", 18, "female", 80000);
+        final Employee leonor = new Employee(5, "leonor", 18, "female", 70000);
+        employeeRepository.save(janley);
+        employeeRepository.save(barbara);
+        employeeRepository.save(ismael);
+        employeeRepository.save(jakilu);
+        employeeRepository.save(leonor);
 
+        String pageIndex = "1";
+        String pageSize = "3";
+
+        //when and then
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("pageIndex", "1")
+                .param("pageSize","3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("janley"))
+                .andExpect(jsonPath("$[1].name").value("barbara"))
+                .andExpect(jsonPath("$[2].name").value("ismael"));
+    }
 }

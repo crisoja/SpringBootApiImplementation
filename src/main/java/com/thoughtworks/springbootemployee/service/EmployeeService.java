@@ -31,7 +31,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){
-        return employeeRepository.findAll(PageRequest.of(pageIndex, pageSize)).getContent();
+        return employeeRepository.findAll(PageRequest.of((pageIndex - 1),pageSize)).getContent();
     }
 
     public Employee addEmployee(Employee employee) {

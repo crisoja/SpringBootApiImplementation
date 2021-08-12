@@ -91,7 +91,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void should_create_employee_when_add_given_one_employee() {
+    public void should_return_created_employee_when_add_given_one_employee() {
         // Given
         Employee employee = new Employee(1, "russel", 22, "male", 1000);
         when(employeeRepository.addEmployee(employee)).thenReturn(employee);
@@ -101,6 +101,20 @@ public class EmployeeServiceTest {
 
         // Then
         assertEquals(employee, actualEmployee);
+    }
+
+    @Test
+    public void should_return_updated_employee_when_update_given_one_employee() {
+        // Given
+        Employee employee = new Employee(1, "russel", 22, "male", 9999);
+        given(employeeRepository.updateEmployee(1, employee)).willReturn(employee);
+
+        // When
+        Employee updatedEmployee = employeeService.updateEmployee(1, employee);
+
+        // Then
+        assertEquals(9999, updatedEmployee.getSalary());
+        assertEquals(employee, updatedEmployee);
     }
 
 }

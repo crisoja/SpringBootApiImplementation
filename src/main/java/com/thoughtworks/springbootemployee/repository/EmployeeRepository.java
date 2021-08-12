@@ -47,4 +47,20 @@ public class EmployeeRepository {
         employees.add(employee);
         return employee;
     }
+
+    public Employee updateEmployee(Integer employeeId, Employee employeeToBeUpdated) {
+        return employees.stream()
+                .filter(employee -> employeeId.equals(employee.getId()))
+                .findFirst()
+                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdated))
+                .get();
+    }
+
+    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdated) {
+
+        if (employeeToBeUpdated.getSalary() != null) {
+            employee.setSalary(employeeToBeUpdated.getSalary());
+        }
+        return employee;
+    }
 }

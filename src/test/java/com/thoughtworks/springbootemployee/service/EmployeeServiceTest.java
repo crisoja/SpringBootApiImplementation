@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -48,7 +49,7 @@ public class EmployeeServiceTest {
         when(retiringEmployeeRepository.findEmployeeById(4)).thenReturn(employee);
 
         // When
-        Employee actualEmployee = employeeService.findEmployeeById(4);
+        Optional<Employee> actualEmployee = employeeService.findEmployeeById(4);
 
         // Then
         assertEquals(employee, actualEmployee);

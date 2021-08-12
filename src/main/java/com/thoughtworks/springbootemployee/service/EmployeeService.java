@@ -33,7 +33,7 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee employee) {
-        return retiringEmployeeRepository.addEmployee(employee);
+        return employeeRepository.save(employee);
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employeeToBeUpdated) {

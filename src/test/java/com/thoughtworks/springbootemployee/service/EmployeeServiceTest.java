@@ -30,10 +30,10 @@ public class EmployeeServiceTest {
         employees.add(new Employee(1, "russel", 22, "male", 1000));
         employees.add(new Employee(2, "janley", 18, "male", 50000));
         employees.add(new Employee(3, "barbie", 20, "female", 2000));
-        given(employeeRepository.getEmployees()).willReturn(employees);
+        given(employeeRepository.findEmployees()).willReturn(employees);
 
         // When
-        List<Employee> actualEmployees = employeeService.getEmployees();
+        List<Employee> actualEmployees = employeeService.findEmployees();
 
         // Then
         assertEquals(employees, actualEmployees);

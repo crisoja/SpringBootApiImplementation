@@ -19,7 +19,7 @@ public class EmployeeRepository {
         employees.add(new Employee(3, "barbie", 20, "female", 2000));
     }
 
-    public List<Employee> getEmployees() {
+    public List<Employee> findEmployees() {
         return employees;
     }
 

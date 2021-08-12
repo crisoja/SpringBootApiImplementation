@@ -120,8 +120,10 @@ public class EmployeeServiceTest {
     void should_delete_specified_employee_when_delete_employee_given_an_employee_id(){
         // Given
         Integer employeeId = 1;
+        Employee employee = new Employee(employeeId, "russel", 22, "male", 1000);
+        employeeRepository.addEmployee(employee);
 
-        // When
+        // Given & When
         employeeService.deleteEmployee(employeeId);
 
         // Then

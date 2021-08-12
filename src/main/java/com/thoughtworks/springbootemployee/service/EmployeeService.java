@@ -40,4 +40,8 @@ public class EmployeeService {
     public Employee updateEmployee(Integer employeeId, Employee employeeToBeUpdated) {
         return employeeRepository.updateEmployee(employeeId, employeeToBeUpdated);
     }
+
+    public void deleteEmployee(Integer employeeId) {
+        employeeRepository.deleteEmployee(employeeId);
+    }
 }

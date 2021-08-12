@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
@@ -115,6 +114,18 @@ public class EmployeeServiceTest {
         // Then
         assertEquals(9999, updatedEmployee.getSalary());
         assertEquals(employee, updatedEmployee);
+    }
+
+    @Test
+    void should_delete_specified_employee_when_delete_employee_given_an_employee_id(){
+        // Given
+        Integer employeeId = 1;
+
+        // When
+        employeeService.deleteEmployee(employeeId);
+
+        // Then
+        assertNull(employeeService.findEmployeeById(1));
     }
 
 }

@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -20,8 +21,8 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee findEmployeeById(Integer employeeId) {
-        return retiringEmployeeRepository.findEmployeeById(employeeId);
+    public Optional<Employee> findEmployeeById(Integer employeeId) {
+        return employeeRepository.findById(employeeId);
     }
 
     public List<Employee> findEmployeeByGender(String gender){

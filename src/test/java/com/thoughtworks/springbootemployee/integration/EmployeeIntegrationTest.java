@@ -124,4 +124,27 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[1].gender").value("male"));
 
     }
+
+    @Test
+    void should_update_employee_when_call_update_employee() throws Exception {
+        //given
+        Integer id = 1;
+        final Employee employee = new Employee(id, "barbara", 20, "male", 1119);
+        final Employee savedEmployee = employeeRepository.save(employee);
+        String employeeUpdates ="{\n" +
+                "    \"id\": 1,\n" +
+                "    \"name\": \"barbara\",\n" +
+                "    \"age\": 20,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"salary\": 1119\n" +
+                "}";
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{employeeId}", id)
+                .contentType(MediaType.APPLICATION_JSON).content(employeeUpdates))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("barbara"))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(1119));
+    }
 }

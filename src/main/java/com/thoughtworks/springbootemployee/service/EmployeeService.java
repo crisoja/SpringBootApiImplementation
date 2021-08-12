@@ -38,8 +38,27 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Integer employeeId, Employee employeeToBeUpdated) {
-        return retiringEmployeeRepository.updateEmployee(employeeId, employeeToBeUpdated);
+    public Employee updateEmployee(Integer employeeId, Employee employeeUpdated) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+
+        return updateEmployeeInformation(employee, employeeUpdated);
+    }
+
+    private Employee updateEmployeeInformation(Employee employee, Employee employeeUpdated) {
+        if (employeeUpdated.getAge() != null) {
+            employee.setAge(employeeUpdated.getAge());
+        }
+        if (employeeUpdated.getName() != null) {
+            employee.setName(employeeUpdated.getName());
+        }
+        if (employeeUpdated.getGender() != null) {
+            employee.setGender(employeeUpdated.getGender());
+        }
+        if (employeeUpdated.getSalary() != null) {
+            employee.setSalary(employeeUpdated.getSalary());
+        }
+        employeeRepository.save(employee);
+        return employee;
     }
 
     public void deleteEmployee(Integer employeeId) {

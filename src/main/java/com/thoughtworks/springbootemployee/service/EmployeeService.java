@@ -39,7 +39,7 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employeeUpdated) {
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        Employee employee = findEmployeeById(employeeId);
 
         return updateEmployeeInformation(employee, employeeUpdated);
     }

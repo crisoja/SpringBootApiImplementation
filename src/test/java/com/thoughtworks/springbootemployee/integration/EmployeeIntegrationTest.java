@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,25 +22,30 @@ public class EmployeeIntegrationTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @AfterEach
+        public void tearDown() {
+        employeeRepository.deleteAll();
+    }
+
 
     @Test
-    void should_return_all_employees_when_call_find_employees() throws Exception {
+    void should_return_all_employees_when_call_find_employees_api() throws Exception {
         // Given
-        final Employee employee = new Employee(1, "russel", 22, "male", 5000);
+        final Employee employee = new Employee(1, "janley", 18, "male", 5000);
         employeeRepository.save(employee);
 
         // When & Then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("russel"))
-                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].name").value("janley"))
+                .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("male"))
                 .andExpect(jsonPath("$[0].salary").value(5000));
     }
 
     @Test
-    void should_add_employee_when_call_add_employee() throws Exception {
+    void should_add_employee_when_call_add_employee_api() throws Exception {
         //given
         String employee = "{\n" +
                 "    \"id\": 1,\n" +
@@ -62,13 +65,12 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    void should_return_correct_employee_when_call_find_employee_by_id() throws Exception {
+    void should_return_correct_employee_when_call_find_employee_by_id_api() throws Exception {
         //given
         final Employee employee = new Employee(1, "janley", 15, "male", 5000);
-        employeeRepository.save(employee);
+        final Employee findEmployee =  employeeRepository.save(employee);
         //when and then
-        int employeeId = 1;
-        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{employeeId}", employeeId))
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{employeeId}", findEmployee.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("janley"))
@@ -78,7 +80,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    void should_return_list_of_employees_when_get_by_pagination_given_page_size_page_index() throws Exception {
+    void should_return_list_of_employees_when_get_by_pagination_given_page_size_page_index_api() throws Exception {
         //given
         final Employee janley = new Employee(1, "janley", 15, "male", 5000);
         final Employee barbara = new Employee(2, "barbara", 18, "female", 50000);
@@ -102,7 +104,7 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    void should_return_list_of_employees_with_male_gender_when_call_find_employee_by_gender() throws Exception {
+    void should_return_list_of_employees_with_male_gender_when_call_find_employee_by_gender_api() throws Exception {
         //given
         final Employee janley = new Employee(1, "janley", 15, "male", 5000);
         final Employee barbara = new Employee(2, "barbara", 18, "female", 50000);
@@ -122,17 +124,15 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].gender").value("male"))
                 .andExpect(jsonPath("$[1].name").value("ismael"))
                 .andExpect(jsonPath("$[1].gender").value("male"));
-
     }
 
     @Test
-    void should_update_employee_when_call_update_employee() throws Exception {
+    void should_update_employee_when_call_update_employee_api() throws Exception {
         //given
-        Integer id = 1;
-        final Employee employee = new Employee(id, "barbara", 20, "male", 1119);
-        final Employee savedEmployee = employeeRepository.save(employee);
+        Employee barbara = new Employee(1, "234", 20, "male", 1119);
+        final Employee employee = employeeRepository.save(barbara);
         String employeeUpdates ="{\n" +
-                "    \"id\": 1,\n" +
+                "    \"id\": 2,\n" +
                 "    \"name\": \"barbara\",\n" +
                 "    \"age\": 20,\n" +
                 "    \"gender\": \"male\",\n" +
@@ -140,9 +140,9 @@ public class EmployeeIntegrationTest {
                 "}";
         //when
         //then
-        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{employeeId}", id)
-                .contentType(MediaType.APPLICATION_JSON).content(employeeUpdates))
-                .andExpect(status().isOk())
+        mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", employee.getId())
+                .contentType(MediaType.APPLICATION_JSON).
+                        content(employeeUpdates))
                 .andExpect(jsonPath("$.name").value("barbara"))
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(1119));
@@ -151,13 +151,11 @@ public class EmployeeIntegrationTest {
         @Test
     void should_delete_employee_when_call_delete_employee() throws Exception {
         //given
-        final Employee barbara = new Employee(1, "barbara", 20, "male", 1119);
-
-        employeeRepository.save(barbara);
+            Employee barbara = new Employee(1, "234", 20, "male", 1119);
+            final Employee employee = employeeRepository.save(barbara);
 
         //when then
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{employeeId}", 1))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{employeeId}", employee.getId()))
                 .andExpect(status().isOk());
     }
 }

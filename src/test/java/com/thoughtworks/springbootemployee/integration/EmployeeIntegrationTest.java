@@ -91,9 +91,6 @@ public class EmployeeIntegrationTest {
         employeeRepository.save(jakilu);
         employeeRepository.save(leonor);
 
-        String pageIndex = "1";
-        String pageSize = "3";
-
         //when and then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees")
                 .param("pageIndex", "1")

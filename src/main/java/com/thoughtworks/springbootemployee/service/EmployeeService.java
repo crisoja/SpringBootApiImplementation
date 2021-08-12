@@ -26,8 +26,8 @@ public class EmployeeService {
         return employeeRepository.findEmployeeByGender(gender);
     }
 
-    public List<Employee> getEmployeesByPagination(Integer pageIndex, Integer pageSize){
-        return employeeRepository.getEmployeesByPagination(pageIndex, pageSize);
+    public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){
+        return employeeRepository.findEmployeesByPagination(pageIndex, pageSize);
     }
 
     public Employee addEmployee(Employee employee) {

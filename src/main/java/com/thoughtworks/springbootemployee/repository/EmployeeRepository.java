@@ -35,7 +35,7 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Employee> getEmployeesByPagination(Integer pageIndex, Integer pageSize){
+    public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){
         return employees.stream()
                 .skip((long) (pageIndex - 1) * pageIndex)
                 .limit(pageSize)

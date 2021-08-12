@@ -78,10 +78,10 @@ public class EmployeeServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "russel", 22, "male", 1000));
         employees.add(new Employee(2, "janley", 18, "male", 50000));
-        when(employeeRepository.getEmployeesByPagination(1,5)).thenReturn((employees));
+        when(employeeRepository.findEmployeesByPagination(1,5)).thenReturn((employees));
 
         // When
-        List<Employee> actualEmployees = employeeService.getEmployeesByPagination(1, 5);
+        List<Employee> actualEmployees = employeeService.findEmployeesByPagination(1, 5);
 
         // Then
         assertEquals(employees, actualEmployees);

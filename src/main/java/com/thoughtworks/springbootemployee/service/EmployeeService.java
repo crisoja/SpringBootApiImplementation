@@ -22,8 +22,8 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> findEmployeeById(Integer employeeId) {
-        return employeeRepository.findById(employeeId);
+    public Employee findEmployeeById(Integer employeeId) {
+        return employeeRepository.findById(employeeId).orElse(null);
     }
 
     public List<Employee> findEmployeeByGender(String gender){

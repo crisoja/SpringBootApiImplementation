@@ -3,16 +3,12 @@ package com.thoughtworks.springbootemployee.integration;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.awt.*;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,6 +20,7 @@ public class EmployeeIntegrationTest {
     private MockMvc mockMvc;
     @Autowired
     private EmployeeRepository employeeRepository;
+
 
     @Test
     void should_return_all_employees_when_call_find_employees() throws Exception {
@@ -59,6 +56,22 @@ public class EmployeeIntegrationTest {
         .andExpect(jsonPath("$.name").value("barbielot"))
         .andExpect(jsonPath("$.gender").value("male"))
         .andExpect(jsonPath("$.salary").value("1000"));
+    }
+
+    @Test
+    void should_return_correct_employee_when_call_find_employee_by_id() throws Exception {
+        //given
+        final Employee employee = new Employee(1, "janley", 15, "male", 5000);
+        employeeRepository.save(employee);
+        //when and then
+        int employeeId = 1;
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{employeeId}", employeeId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("janley"))
+                .andExpect(jsonPath("$.age").value(15))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(5000));
     }
 
 

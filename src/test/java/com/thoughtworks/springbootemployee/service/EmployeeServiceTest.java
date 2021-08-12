@@ -74,14 +74,14 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_2_employee_when_get_by_page_given_2_page_size() {
+    void should_return_list_of_employees_when_get_by_pagination_given_5_page_size() {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1, "russel", 22, "male", 1000));
         employees.add(new Employee(2, "janley", 18, "male", 50000));
-        when(employeeRepository.getEmployeesByPagination(1,2)).thenReturn((employees));
+        when(employeeRepository.getEmployeesByPagination(1,5)).thenReturn((employees));
 
         // When
-        List<Employee> actualEmployees = employeeService.getEmployeesByPagination(1, 2);
+        List<Employee> actualEmployees = employeeService.getEmployeesByPagination(1, 5);
 
         // Then
         assertEquals(employees, actualEmployees);

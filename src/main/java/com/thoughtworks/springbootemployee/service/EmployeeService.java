@@ -26,7 +26,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployeeByGender(String gender){
-        return retiringEmployeeRepository.findEmployeeByGender(gender);
+        return employeeRepository.findEmployeeByGender(gender);
     }
 
     public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){

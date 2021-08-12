@@ -17,4 +17,8 @@ public class CompanyService {
     public List<Company> findCompanies() {
         return companyRepository.findAll();
     }
+
+    public Company addEmployee(Company company) {
+        return null;
+    }
 }

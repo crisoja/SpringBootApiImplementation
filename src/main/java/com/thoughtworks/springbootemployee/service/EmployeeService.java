@@ -2,12 +2,14 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class EmployeeService {
+    private RetiringEmployeeRepository retiringEmployeeRepository;
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -15,30 +17,30 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployees() {
-        return employeeRepository.findEmployees();
+        return employeeRepository.findAll();
     }
 
     public Employee findEmployeeById(Integer employeeId) {
-        return employeeRepository.findEmployeeById(employeeId);
+        return retiringEmployeeRepository.findEmployeeById(employeeId);
     }
 
     public List<Employee> findEmployeeByGender(String gender){
-        return employeeRepository.findEmployeeByGender(gender);
+        return retiringEmployeeRepository.findEmployeeByGender(gender);
     }
 
     public List<Employee> findEmployeesByPagination(Integer pageIndex, Integer pageSize){
-        return employeeRepository.findEmployeesByPagination(pageIndex, pageSize);
+        return retiringEmployeeRepository.findEmployeesByPagination(pageIndex, pageSize);
     }
 
     public Employee addEmployee(Employee employee) {
-        return employeeRepository.addEmployee(employee);
+        return retiringEmployeeRepository.addEmployee(employee);
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employeeToBeUpdated) {
-        return employeeRepository.updateEmployee(employeeId, employeeToBeUpdated);
+        return retiringEmployeeRepository.updateEmployee(employeeId, employeeToBeUpdated);
     }
 
     public void deleteEmployee(Integer employeeId) {
-        employeeRepository.deleteEmployee(employeeId);
+        retiringEmployeeRepository.deleteEmployee(employeeId);
     }
 }

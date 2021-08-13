@@ -1,8 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.model.EmployeeRequest;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,9 @@ public class EmployeesController {
 
     private List<Employee> employees = new ArrayList<>();
     private EmployeeService employeeService;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
 
     public EmployeesController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -44,14 +50,14 @@ public class EmployeesController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public Employee addEmployee(@RequestBody EmployeeRequest employee) {
+        return employeeService.addEmployee(employeeMapper.toEntity(employee));
     }
 
     @PutMapping("/{employeeId}")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeToBeUpdated) {
-        return employeeService.updateEmployee(employeeId, employeeToBeUpdated);
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.updateEmployee(employeeId, employeeMapper.toEntity(employeeRequest));
     }
 
     @DeleteMapping(path = "/{employeeId}")

@@ -43,7 +43,6 @@ public class EmployeeService {
 
     public Employee updateEmployee(Integer employeeId, Employee employeeUpdated) {
         Employee employee = findEmployeeById(employeeId);
-//employee checking
         return updateEmployeeInformation(employee, employeeUpdated);
     }
 

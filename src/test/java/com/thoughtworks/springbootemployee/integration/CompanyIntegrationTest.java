@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,30 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].name").value("marimar"))
                 .andExpect(jsonPath("$[1].name").value("sumail"))
                 .andExpect(jsonPath("$[2].name").value("barbie"));
+    }
+
+    @Test
+    void should_return_employees_by_pagination_when_call_get_employee_by_pagination_api() throws Exception {
+        //given
+        String pageIndex = "1";
+        String pageSize = "3";
+
+
+        companyRepository.save(new Company("OOCL"));
+        companyRepository.save(new Company("COSCO"));
+        companyRepository.save(new Company("IBM"));
+        companyRepository.save(new Company("MICROSOFT"));
+        companyRepository.save(new Company("GOOGLE"));
+
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies")
+                .param("pageIndex", pageIndex)
+                .param("pageSize",pageSize))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+                .andExpect(jsonPath("$[1].companyName").value("COSCO"))
+                .andExpect(jsonPath("$[2].companyName").value("IBM"));
     }
 }
 

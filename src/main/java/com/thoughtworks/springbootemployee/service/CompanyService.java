@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +57,9 @@ public class CompanyService {
             //will put exception later;
         }
        return companyRepository.findById(company.getId()).get().getEmployees();
+    }
+
+    public List<Company> findCompaniesByPagination(Integer pageIndex, Integer pageSize) {
+        return companyRepository.findAll(PageRequest.of((pageIndex - 1), pageSize)).getContent();
     }
 }

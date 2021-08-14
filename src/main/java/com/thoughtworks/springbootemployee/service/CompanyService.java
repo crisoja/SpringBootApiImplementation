@@ -45,9 +45,6 @@ public class CompanyService {
     }
     public void deleteCompany(Integer id) {
         Company company = findCompanyById(id);
-        if(company == null){
-            //will put exception later
-        }
         companyRepository.delete(company);
     }
 

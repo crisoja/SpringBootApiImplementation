@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -25,7 +26,8 @@ public class CompanyService {
     }
 
     public Company findCompanyById(Integer id){
-        return companyRepository.findById(id).orElse(null);
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new CompanyNotFoundException("Company ID not found!"));
     }
 
     public Company updateCompany(Integer id, Company companyToUpdate) {

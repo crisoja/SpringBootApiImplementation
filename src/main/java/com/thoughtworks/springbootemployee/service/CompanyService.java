@@ -19,6 +19,6 @@ public class CompanyService {
     }
 
     public Company addEmployee(Company company) {
-        return null;
+       return companyRepository.save(company);
     }
 }

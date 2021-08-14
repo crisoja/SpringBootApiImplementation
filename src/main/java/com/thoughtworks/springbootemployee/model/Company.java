@@ -42,4 +42,7 @@ public class Company {
         return employees;
     }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 }

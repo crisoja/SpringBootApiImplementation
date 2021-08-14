@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,22 @@ public class CompanyIntegrationTest {
         //when and then
         mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", findCompany.getId()))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyName").value("OOCL"));
+    }
+
+    @Test
+    void should_update_company_when_call_update_company_api() throws Exception {
+        //given
+        final Company cosco = new Company(1,"COSCO");
+        final Company company = companyRepository.save(cosco);
+        String companyUpdate ="{\n" +
+                "    \"companyName\": \"OOCL\"\n" +
+                "}";
+        //when
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.put("/companies/{id}", company.getId())
+                .contentType(MediaType.APPLICATION_JSON).
+                        content(companyUpdate))
                 .andExpect(jsonPath("$.companyName").value("OOCL"));
     }
 }

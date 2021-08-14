@@ -30,9 +30,6 @@ public class CompanyService {
 
     public Company updateCompany(Integer id, Company companyToUpdate) {
         Company company = findCompanyById(id);
-        if(company == null){
-            //will put exception later
-        }
             return updateCompanyInformation(company, companyToUpdate);
     }
 

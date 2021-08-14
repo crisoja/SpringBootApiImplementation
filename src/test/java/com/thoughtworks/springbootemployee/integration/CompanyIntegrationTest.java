@@ -77,5 +77,16 @@ public class CompanyIntegrationTest {
                         content(companyUpdate))
                 .andExpect(jsonPath("$.companyName").value("OOCL"));
     }
+
+    @Test
+    void should_delete_employee_when_call_delete_employee() throws Exception {
+        //given
+        final Company cosco = new Company("COSCO");
+        final Company company = companyRepository.save(cosco);
+
+        //when then
+        mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
+                .andExpect(status().isOk());
+    }
 }
 

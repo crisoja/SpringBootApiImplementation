@@ -26,8 +26,8 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Company addEmployee(@RequestBody Company company){
-        return companyService.addEmployee(company);
+    public Company addCompany(@RequestBody Company company){
+        return companyService.addCompany(company);
     }
 
     @GetMapping("/{id}")
@@ -39,5 +39,10 @@ public class CompanyController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Company updateCompany(@PathVariable Integer id, @RequestBody Company company){
         return companyService.updateCompany(id,company);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteCompany(@PathVariable Integer id) {
+        companyService.deleteCompany(id);
     }
 }

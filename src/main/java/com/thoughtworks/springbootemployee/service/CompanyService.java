@@ -19,7 +19,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company addEmployee(Company company) {
+    public Company addCompany(Company company) {
        return companyRepository.save(company);
     }
 
@@ -29,17 +29,24 @@ public class CompanyService {
 
     public Company updateCompany(Integer id, Company companyToUpdate) {
         Company company = findCompanyById(id);
-        if(company != null){
+        if(company == null){
             //will put exception later
         }
-            return updateEmployeeInformation(company, companyToUpdate);
+            return updateCompanyInformation(company, companyToUpdate);
     }
 
-    private Company updateEmployeeInformation(Company company, Company companyUpdated) {
+    private Company updateCompanyInformation(Company company, Company companyUpdated) {
         if (companyUpdated.getCompanyName() != null) {
             company.setCompanyName(companyUpdated.getCompanyName());
         }
         companyRepository.save(company);
         return company;
+    }
+    public void deleteCompany(Integer id) {
+        Company company = findCompanyById(id);
+        if(company == null){
+            //will put exception later
+        }
+        companyRepository.delete(company);
     }
 }

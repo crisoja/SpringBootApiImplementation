@@ -2,7 +2,9 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -15,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
 
     @Autowired
     private CompanyService companyService;
@@ -44,17 +49,18 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Company updateCompany(@PathVariable Integer id, @RequestBody Company company){
-        return companyService.updateCompany(id,company);
+    public CompanyResponse updateCompany(@PathVariable Integer id, @RequestBody CompanyRequest company){
+        return companyMapper.toResponse(companyService.updateCompany(id, companyMapper.toEntity(company)));
     }
 
     @DeleteMapping(path = "/{id}")
     public void deleteCompany(@PathVariable Integer id) {
         companyService.deleteCompany(id);
     }
+
     @GetMapping("/{id}/employees")
-    public List<Employee> findEmployeesByCompanyId(@PathVariable Integer id){
-        return companyService.findEmployeesByCompanyId(id);
+    public List<EmployeeResponse> findEmployeesByCompanyId(@PathVariable Integer id){
+        return employeeMapper.toResponse(companyService.findEmployeesByCompanyId(id));
     }
 
     @GetMapping(params = {"pageIndex", "pageSize"})

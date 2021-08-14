@@ -49,5 +49,16 @@ public class CompanyIntegrationTest {
                 .content(company))
                 .andExpect(jsonPath("$.companyName").value("OOCL"));
     }
+
+    @Test
+    void should_return_correct_company_when_call_find_company_by_id_api() throws Exception {
+        //given
+        final Company company = new Company(1,"OOCL");
+        final Company findCompany =  companyRepository.save(company);
+        //when and then
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}", findCompany.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyName").value("OOCL"));
+    }
 }
 

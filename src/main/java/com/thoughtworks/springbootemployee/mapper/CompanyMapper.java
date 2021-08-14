@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.mapper;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import org.springframework.beans.BeanUtils;
 
 public class CompanyMapper {

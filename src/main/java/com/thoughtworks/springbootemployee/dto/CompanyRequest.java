@@ -7,6 +7,19 @@ import java.util.List;
 public class CompanyRequest {
 
     private Integer id;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
     private String companyName;
 
     public Integer getEmployeeNumber() {

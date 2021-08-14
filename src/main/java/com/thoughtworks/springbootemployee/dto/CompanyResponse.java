@@ -46,4 +46,15 @@ public class CompanyResponse {
         return employees;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 }

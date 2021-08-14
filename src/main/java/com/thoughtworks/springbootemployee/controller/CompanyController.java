@@ -1,8 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-
+    @Autowired
+    private CompanyMapper companyMapper;
     private CompanyService companyService;
 
     public CompanyController(CompanyService companyService) {
@@ -19,8 +23,8 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> findCompanies() {
-        return companyService.findCompanies();
+    public List<CompanyResponse> findCompanies() {
+        return companyMapper.toResponse(companyService.findCompanies());
     }
 
     @PostMapping

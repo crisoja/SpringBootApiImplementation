@@ -7,6 +7,9 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CompanyMapper {
 
@@ -24,5 +27,18 @@ public class CompanyMapper {
 
         return employee;
     }
+
+    public List<CompanyResponse> toResponse(List<Company> companies) {
+        List<CompanyResponse> companiesResponse = new ArrayList<>();
+        for (Company company : companies) {
+            CompanyResponse companyResponse = new CompanyResponse();
+            BeanUtils.copyProperties(company, companyResponse);
+            companyResponse.setEmployeeNumber(company.getEmployees().size());
+            companiesResponse.add(companyResponse);
+        }
+
+        return companiesResponse;
+    }
+
 
 }

@@ -49,4 +49,12 @@ public class CompanyService {
         }
         companyRepository.delete(company);
     }
+
+    public List<Employee> findEmployeesByCompanyId(Integer id){
+        Company company = findCompanyById(id);
+        if(company == null){
+            //will put exception later;
+        }
+       return companyRepository.findById(company.getId()).get().getEmployees();
+    }
 }

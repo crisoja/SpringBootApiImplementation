@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.model.EmployeeRequest;
 import com.thoughtworks.springbootemployee.model.EmployeeResponse;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -45,4 +46,9 @@ public class CompanyController {
     public void deleteCompany(@PathVariable Integer id) {
         companyService.deleteCompany(id);
     }
+    @GetMapping("/{id}/employees")
+    public List<Employee> findEmployeesByCompanyId(@PathVariable Integer id){
+        return companyService.findEmployeesByCompanyId(id);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.integration;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class CompanyIntegrationTest {
     private MockMvc mockMvc;
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @AfterEach
     public void tearDown(){
@@ -79,7 +82,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    void should_delete_employee_when_call_delete_employee() throws Exception {
+    void should_delete_employee_when_call_delete_employee_api() throws Exception {
         //given
         final Company cosco = new Company("COSCO");
         final Company company = companyRepository.save(cosco);
@@ -87,6 +90,21 @@ public class CompanyIntegrationTest {
         //when then
         mockMvc.perform(MockMvcRequestBuilders.delete("/companies/{id}", company.getId()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void should_return_list_of_employee_of_specific_company_when_find_employee_list_by_company_id_api() throws Exception {
+
+        Company company = companyRepository.save(new Company( "OOCL"));
+        employeeRepository.save(new Employee( "marimar", 22, "female", 1000, company.getId()));
+        employeeRepository.save(new Employee("sumail", 18, "male", 50000,company.getId()));
+        employeeRepository.save(new Employee("barbie", 20, "female", 2000,company.getId()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", company.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("marimar"))
+                .andExpect(jsonPath("$[1].name").value("sumail"))
+                .andExpect(jsonPath("$[2].name").value("barbie"));
     }
 }
 

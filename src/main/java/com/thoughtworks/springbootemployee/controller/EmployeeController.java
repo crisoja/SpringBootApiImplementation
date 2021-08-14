@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
-public class EmployeesController {
+public class EmployeeController {
 
     private List<Employee> employees = new ArrayList<>();
     private EmployeeService employeeService;
@@ -22,7 +22,7 @@ public class EmployeesController {
     @Autowired
     private EmployeeMapper employeeMapper;
 
-    public EmployeesController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

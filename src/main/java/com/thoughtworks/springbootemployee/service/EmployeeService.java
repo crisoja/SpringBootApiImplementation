@@ -55,8 +55,7 @@ public class EmployeeService {
         if (employeeUpdated.getSalary() != null) {
             employee.setSalary(employeeUpdated.getSalary());
         }
-        employeeRepository.save(employee);
-        return employee;
+        return employeeRepository.save(employee);
     }
 
     public Employee deleteEmployee(Integer employeeId) {

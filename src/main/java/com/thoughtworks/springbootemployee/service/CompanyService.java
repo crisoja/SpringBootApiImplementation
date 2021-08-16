@@ -41,8 +41,7 @@ public class CompanyService {
         if (companyUpdated.getCompanyName() != null) {
             company.setCompanyName(companyUpdated.getCompanyName());
         }
-        companyRepository.save(company);
-        return company;
+        return  companyRepository.save(company);
     }
     public void deleteCompany(Integer id) {
         companyRepository.delete(findCompanyById(id));

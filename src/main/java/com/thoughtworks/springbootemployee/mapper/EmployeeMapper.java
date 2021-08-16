@@ -19,10 +19,10 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponse toResponse(Employee employee){
-        EmployeeResponse employeeRespoonse = new EmployeeResponse(); // typoe for
-        BeanUtils.copyProperties(employee, employeeRespoonse);
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        BeanUtils.copyProperties(employee, employeeResponse);
 
-        return employeeRespoonse;
+        return employeeResponse;
     }
 
     public List<EmployeeResponse> toResponse(List<Employee> employees) {

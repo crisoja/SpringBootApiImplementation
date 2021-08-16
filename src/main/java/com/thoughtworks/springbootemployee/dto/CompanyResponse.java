@@ -9,16 +9,12 @@ public class CompanyResponse {
 
     private Integer id;
     private String companyName;
+    private Integer employeeNumber;
 
     public Integer getEmployeeNumber() {
         return employeeNumber;
     }
 
-    public void setEmployeeNumber(Integer employeeNumber) {
-        this.employeeNumber = employeeNumber;
-    }
-
-    private Integer employeeNumber;
     private List<Employee> employees;
 
     public CompanyResponse(Integer id, String companyName, List<Employee> employees) {
@@ -56,5 +52,10 @@ public class CompanyResponse {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public void setEmployeeNumber(Integer employeeNumber) {
+        this.employeeNumber = employeeNumber;
+
     }
 }

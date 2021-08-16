@@ -19,7 +19,7 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponse toResponse(Employee employee){
-        EmployeeResponse employeeRespoonse = new EmployeeResponse();
+        EmployeeResponse employeeRespoonse = new EmployeeResponse(); // typoe for
         BeanUtils.copyProperties(employee, employeeRespoonse);
 
         return employeeRespoonse;

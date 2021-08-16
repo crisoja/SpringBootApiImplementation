@@ -34,8 +34,7 @@ public class CompanyService {
     }
 
     public Company updateCompany(Integer id, Company companyToUpdate) {
-        Company company = findCompanyById(id);
-            return updateCompanyInformation(company, companyToUpdate);
+            return updateCompanyInformation(findCompanyById(id), companyToUpdate);
     }
 
     private Company updateCompanyInformation(Company company, Company companyUpdated) {
@@ -46,8 +45,7 @@ public class CompanyService {
         return company;
     }
     public void deleteCompany(Integer id) {
-        Company company = findCompanyById(id);
-        companyRepository.delete(company);
+        companyRepository.delete(findCompanyById(id));
     }
 
     public List<Employee> findEmployeesByCompanyId(Integer id){

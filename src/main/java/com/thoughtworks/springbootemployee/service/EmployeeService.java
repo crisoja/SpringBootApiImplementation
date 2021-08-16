@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private RetiringEmployeeRepository retiringEmployeeRepository; //remove unused repository
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {

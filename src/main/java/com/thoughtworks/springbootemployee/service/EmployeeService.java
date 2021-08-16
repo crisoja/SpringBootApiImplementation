@@ -39,8 +39,7 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer employeeId, Employee employeeUpdated) {
-        Employee employee = findEmployeeById(employeeId);
-        return updateEmployeeInformation(employee, employeeUpdated);
+        return updateEmployeeInformation(findEmployeeById(employeeId), employeeUpdated);
     }
 
     private Employee updateEmployeeInformation(Employee employee, Employee employeeUpdated) {
